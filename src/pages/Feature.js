@@ -1,113 +1,124 @@
-// Feature Page - Showcases AI features
 import React from 'react';
 
 const Feature = () => {
   const features = [
     {
-      title: 'SVM Algorithm',
-      desc: 'Support Vector Machine delivers 83%+ accuracy on student pass/fail classification.',
+      title: 'Random Forest Classifier',
+      desc: 'Our primary ensemble model that combines multiple decision trees to deliver the highest prediction accuracy.',
       tag: 'Core Model'
     },
     {
-      title: 'Correlation Heatmap',
-      desc: 'Automatically identifies the 8 most impactful features from 30+ variables using Pearson correlation analysis.no manual selection needed.',
-      tag: 'Feature Selection'
+      title: '13-Point Feature Analysis',
+      desc: 'Analyzes 13 distinct academic and socio-economic variables including grades, absences, and family background.',
+      tag: 'Data Scope'
     },
     {
-      title: 'Multi-Model Comparison',
-      desc: 'Trains and evaluates SVM, KNN, Random Forest, and Naive Bayes simultaneously, then selects the highest-accuracy model automatically.',
-      tag: 'Model Selection'
+      title: 'Automated Data Mapping',
+      desc: 'Converts categorical input into numerical formats automatically using advanced preprocessing pipelines.',
+      tag: 'Preprocessing'
     },
     {
-      title: 'Confidence Score',
-      desc: 'Every prediction includes a confidence percentage so students understand how certain the model is about their predicted outcome.',
-      tag: 'Explainability'
+      title: 'Model Competition',
+      desc: 'Simultaneously evaluates SVM, KNN, and Naive Bayes to ensure Random Forest remains the top performer.',
+      tag: 'Optimization'
     },
     {
-      title: 'Prediction History',
-      desc: 'All predictions are saved to your account so you can track changes over time and monitor academic improvement.',
-      tag: 'Persistence'
+      title: 'Persistent Prediction Logs',
+      desc: 'Securely stores every analysis in MongoDB database, allowing you to track performance trends over time.',
+      tag: 'History'
     },
     {
-      title: 'Secure Authentication',
-      desc: 'Password hashing and token-based authentication keep your data safe. Only you can access your prediction records.',
+      title: 'Secure Access Control',
+      desc: 'Ensures student data privacy through industry-standard authentication and encrypted record handling.',
       tag: 'Security'
     },
   ];
 
   const models = [
-    { name: 'SVM', acc: 83.5, color: '#FF6D00' },
-    { name: 'KNN', acc: 77.2, color: '#2563EB' },
-    { name: 'Random Forest', acc: 77.2, color: '#2563EB' },
-    { name: 'Naive Bayes', acc: 75.9, color: '#2563EB' },
+    { name: 'Random Forest', acc: 82.28, color: '#FF6D00' }, 
+    { name: 'SVM', acc: 81.01, color: '#2563EB' },
+    { name: 'KNN', acc: 74.68, color: '#2563EB' },
+    { name: 'Naive Bayes', acc: 72.15, color: '#2563EB' },
+  ];
+
+  const featureList = [
+    { feat: 'G1', desc: 'Period 1 Grade' },
+    { feat: 'Failures', desc: 'Past Failures' },
+    { feat: 'Goout', desc: 'Social Activity' },
+    { feat: 'Age', desc: 'Student Age' },
+    { feat: 'Higher', desc: 'Higher Edu Goal' },
+    { feat: 'Medu', desc: 'Mother Education' },
+    { feat: 'Fedu', desc: 'Father Education' },
+    { feat: 'Guardian', desc: 'Legal Guardian' },
+    { feat: 'Schoolsup', desc: 'School Support' },
+    { feat: 'Reason', desc: 'Choice Reason' },
+    { feat: 'Romantic', desc: 'Relationship' },
+    { feat: 'Paid', desc: 'Extra Classes' },
+    { feat: 'Absences', desc: 'Days Missed' },
   ];
 
   return (
     <>
-      {/* Header */}
       <section style={{
         background: 'linear-gradient(135deg,#f0f4ff 0%,#e8eeff 100%)',
-        padding: '70px 80px', textAlign: 'center'
+        padding: '80px 20px', textAlign: 'center'
       }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1a1a2e', marginBottom: 14 }}>
-          <span style={{ color: '#2563EB' }}>Features</span>
+        <h1 style={{ fontSize: '2.8rem', fontWeight: 800, color: '#1a1a2e', marginBottom: 16 }}>
+          Features of <span style={{ color: '#2563EB' }}>EduTech</span>
         </h1>
-        <p style={{ color: '#6b7280', fontSize: '1rem', maxWidth: 520, margin: '0 auto' }}>
-          Explore the machine learning capabilities that power EduTech accurate performance predictions.
+        <p style={{ color: '#64748b', fontSize: '1.1rem', maxWidth: 600, margin: '0 auto' }}>
+          Explore the sophisticated machine learning features driving our academic success predictions.
         </p>
       </section>
 
-      {/* Features Grid */}
-      <section style={{ padding: '70px 80px', background: 'white' }}>
+      <section style={{ padding: '80px 20px', background: 'white' }}>
         <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: 28, maxWidth: 1100, margin: '0 auto'
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 30, maxWidth: 1200, margin: '0 auto'
         }}>
           {features.map((f, i) => (
             <div key={i} style={{
-              background: '#d1d6e2', border: '1.5px solid #e8eeff',
-              borderRadius: 16, padding: '28px 26px',
-              transition: 'transform 0.2s, box-shadow 0.2s',
+              background: '#ffffff', border: '1px solid #e2e8f0',
+              borderRadius: 20, padding: '30px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
             }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(30,58,138,0.10)'; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(37,99,235,0.1)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)'; }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
-                <span style={{ fontSize: '2rem' }}>{f.icon}</span>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 15 }}>
                 <span style={{
-                  background: '#dbeafe', color: '#1d4ed8', padding: '3px 10px',
-                  borderRadius: 20, fontSize: '0.75rem', fontWeight: 600
+                  background: '#eff6ff', color: '#2563eb', padding: '4px 12px',
+                  borderRadius: 20, fontSize: '0.75rem', fontWeight: 700
                 }}>{f.tag}</span>
               </div>
-              <h3 style={{ fontWeight: 600, fontSize: '1.05rem', marginBottom: 8 }}>{f.title}</h3>
-              <p style={{ color: '#43474f', fontSize: '0.88rem', lineHeight: 1.7 }}>{f.desc}</p>
+              <h3 style={{ fontWeight: 700, fontSize: '1.15rem', marginBottom: 12, color: '#1e293b' }}>{f.title}</h3>
+              <p style={{ color: '#64748b', fontSize: '0.92rem', lineHeight: 1.7 }}>{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Model Accuracy Chart */}
-      <section style={{ padding: '60px 80px', background: '#f0f4ff' }}>
-        <h2 className="section-title">Model Accuracy Comparison</h2>
-        <p className="section-subtitle">Results on the UCI Student Performance dataset</p>
-        <div style={{ maxWidth: 700, margin: '40px auto 0', background: 'white', borderRadius: 18, padding: '36px 40px', boxShadow: '0 4px 24px rgba(30,58,138,0.08)' }}>
+      <section style={{ padding: '80px 20px', background: '#f8fafc' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '2.2rem', color: '#1e293b', marginBottom: 10 }}>Accuracy Comparison</h2>
+        <p style={{ textAlign: 'center', color: '#64748b', marginBottom: 40 }}>Validated against multi-model performance benchmarks</p>
+        <div style={{ maxWidth: 750, margin: '0 auto', background: 'white', borderRadius: 24, padding: '40px', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}>
           {models.map((m, i) => (
-            <div key={i} style={{ marginBottom: 22 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
-                <span style={{ fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-                  {i === 0 && <span style={{ background: '#fff3e0', color: '#FF6D00', padding: '2px 9px', borderRadius: 12, fontSize: '0.72rem', fontWeight: 700 }}>BEST</span>}
-                  {m.name}
+            <div key={i} style={{ marginBottom: 25 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                <span style={{ fontWeight: 700, fontSize: '1rem', color: '#334155' }}>
+                  {m.name} {i === 0 && <span style={{ marginLeft: 10, background: '#fee2e2', color: '#dc2626', padding: '2px 8px', borderRadius: 10, fontSize: '0.65rem' }}>LEADER</span>}
                 </span>
-                <span style={{ fontWeight: 700, color: m.color }}>{m.acc}%</span>
+                <span style={{ fontWeight: 800, color: m.color }}>{m.acc}%</span>
               </div>
-              <div style={{ height: 14, background: '#f0f4ff', borderRadius: 8, overflow: 'hidden' }}>
+              <div style={{ height: 12, background: '#f1f5f9', borderRadius: 10, overflow: 'hidden' }}>
                 <div style={{
                   height: '100%', width: `${m.acc}%`,
-                  background: m.color === '#FF6D00'
-                    ? 'linear-gradient(90deg,#FF6D00,#FF8F00)'
-                    : 'linear-gradient(90deg,#1E3A8A,#2563EB)',
-                  borderRadius: 8,
-                  transition: 'width 1s ease'
+                  background: m.color === '#FF6D00' 
+                    ? 'linear-gradient(90deg, #f59e0b, #d97706)' 
+                    : 'linear-gradient(90deg, #3b82f6, #2563eb)',
+                  borderRadius: 10,
+                  transition: 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)'
                 }} />
               </div>
             </div>
@@ -115,29 +126,20 @@ const Feature = () => {
         </div>
       </section>
 
-      {/* Selected Features Info */}
-      <section style={{ padding: '60px 80px', background: 'white' }}>
-        <h2 className="section-title">Selected Features</h2>
-        <p className="section-subtitle">8 features automatically selected via correlation analysis</p>
+      <section style={{ padding: '80px 20px', background: 'white' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '2.2rem', color: '#1e293b', marginBottom: 10 }}>Processed Variables</h2>
+        <p style={{ textAlign: 'center', color: '#64748b', marginBottom: 40 }}>Our model integrates 13 key parameters for every prediction</p>
         <div style={{
-          display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center', marginTop: 30
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+          gap: 16, maxWidth: 1100, margin: '0 auto'
         }}>
-          {[
-            { feat: 'G1', desc: 'First Period Grade' },
-            { feat: 'failures', desc: 'Past Failures' },
-            { feat: 'goout', desc: 'Social Activity' },
-            { feat: 'age', desc: 'Student Age' },
-            { feat: 'higher', desc: 'Wants Higher Edu.' },
-            { feat: 'Medu', desc: "Mother's Education" },
-            { feat: 'Fedu', desc: "Father's Education" },
-            { feat: 'guardian', desc: 'Guardian Type' },
-          ].map((f, i) => (
+          {featureList.map((f, i) => (
             <div key={i} style={{
-              background: '#f0f4ff', borderRadius: 12, padding: '14px 22px', textAlign: 'center',
-              border: '1.5px solid #dbeafe', minWidth: 140
+              background: '#f8fafc', borderRadius: 16, padding: '16px', textAlign: 'center',
+              border: '1px solid #e2e8f0'
             }}>
-              <div style={{ fontWeight: 700, color: '#1d4ed8', fontSize: '1rem', marginBottom: 4 }}>{f.feat}</div>
-              <div style={{ color: '#6b7280', fontSize: '0.8rem' }}>{f.desc}</div>
+              <div style={{ fontWeight: 800, color: '#2563eb', fontSize: '1rem', marginBottom: 4 }}>{f.feat}</div>
+              <div style={{ color: '#475569', fontSize: '0.8rem', fontWeight: 500 }}>{f.desc}</div>
             </div>
           ))}
         </div>

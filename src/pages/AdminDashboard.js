@@ -3,112 +3,94 @@ import React, { useEffect, useState } from 'react';
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [contacts, setContacts] = useState([]);
+  const [predictions, setPredictions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const [uRes, cRes] = await Promise.all([
+      const [uRes, cRes, pRes] = await Promise.all([
         fetch('http://127.0.0.1:5000/api/admin/users'),
-        fetch('http://127.0.0.1:5000/api/admin/contacts')
+        fetch('http://127.0.0.1:5000/api/admin/contacts'),
+        fetch('http://127.0.0.1:5000/api/admin/predictions') 
       ]);
       const uData = await uRes.json();
       const cData = await cRes.json();
+      const pData = await pRes.json();
+
       setUsers(uData.users || []);
       setContacts(cData.contacts || []);
-    } catch (err) { console.error("Fetch error:", err); }
-    finally { setLoading(false); }
+      setPredictions(pData.predictions || []);
+    } catch (err) { 
+      console.error("Fetch error:", err); 
+    } finally { 
+      setLoading(false); 
+    }
   };
 
   useEffect(() => { fetchData(); }, []);
 
-  const deleteUser = async (email) => {
-    if (window.confirm(`Are you sure you want to delete ${email}?`)) {
-      await fetch(`http://127.0.0.1:5000/api/admin/delete_user/${email}`, { method: 'DELETE' });
-      fetchData();
-    }
-  };
-
-  const deleteMsg = async (email, time) => {
-    if (window.confirm("Delete this inquiry permanently?")) {
-      await fetch('http://127.0.0.1:5000/api/admin/delete_contact', {
+  const deleteRecord = async (endpoint, payload) => {
+    if (window.confirm("Are you sure you want to delete this record permanently?")) {
+      await fetch(`http://127.0.0.1:5000/api/admin/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, timestamp: time })
+        body: JSON.stringify(payload)
       });
       fetchData();
     }
   };
 
-  // --- REFINED THEME STYLES ---
   const styles = {
-    wrapper: { backgroundColor: '#f8fafc', minHeight: '100vh', padding: '50px 20px', fontFamily: '"Inter", "Segoe UI", sans-serif' },
-    container: { maxWidth: '1100px', margin: '0 auto' },
-    titleSection: { marginBottom: '40px', borderLeft: '5px solid #4f46e5', paddingLeft: '20px' },
-    mainTitle: { fontSize: '32px', fontWeight: '800', color: '#1e293b', margin: '0' },
-    subTitle: { color: '#64748b', fontSize: '15px', marginTop: '5px' },
-    card: { background: 'white', borderRadius: '16px', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', marginBottom: '40px', border: '1px solid #e2e8f0', overflow: 'hidden' },
-    cardHeader: { padding: '20px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9' },
-    blueHeader: { backgroundColor: '#4f46e5', color: 'white' },
-    roseHeader: { backgroundColor: '#f43f5e', color: 'white' },
+    wrapper: { backgroundColor: '#f1f5f9', minHeight: '100vh', padding: '40px 20px', fontFamily: '"Inter", sans-serif' },
+    container: { maxWidth: '1200px', margin: '0 auto' },
+    header: { marginBottom: '30px' },
+    card: { background: 'white', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', marginBottom: '30px', overflow: 'hidden', border: '1px solid #e2e8f0' },
+    cardHeader: { padding: '15px 25px', color: 'white', fontWeight: '700', display: 'flex', justifyContent: 'space-between' },
     table: { width: '100%', borderCollapse: 'collapse' },
-    th: { textAlign: 'left', padding: '15px 25px', backgroundColor: '#f8fafc', color: '#64748b', textTransform: 'uppercase', fontSize: '12px', fontWeight: '700', letterSpacing: '0.05em' },
-    td: { padding: '18px 25px', borderBottom: '1px solid #f1f5f9', color: '#334155', fontSize: '14px' },
-    deleteBtn: { backgroundColor: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: '600', transition: '0.2s' },
-    badge: { backgroundColor: '#eef2ff', color: '#4f46e5', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '700' },
-    userText: { fontWeight: '600', color: '#1e293b' },
-    emailText: { color: '#94a3b8', fontSize: '12px' },
-    messageBox: { backgroundColor: '#fdf2f2', padding: '10px', borderRadius: '8px', marginTop: '8px', borderLeft: '3px solid #f43f5e', fontStyle: 'italic', fontSize: '13px' }
+    th: { textAlign: 'left', padding: '12px 25px', backgroundColor: '#f8fafc', color: '#64748b', fontSize: '11px', textTransform: 'uppercase' },
+    td: { padding: '15px 25px', borderBottom: '1px solid #f1f5f9', fontSize: '14px', color: '#334155' },
+    btn: { padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', border: '1px solid #fecdd3', backgroundColor: '#fff1f2', color: '#e11d48', fontSize: '12px', fontWeight: '600' },
+    statusBadge: (pass) => ({
+      padding: '4px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '800',
+      backgroundColor: pass ? '#dcfce7' : '#fee2e2',
+      color: pass ? '#166534' : '#991b1b'
+    })
   };
 
-  if (loading) return (
-    <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'100vh', color:'#4f46e5', fontWeight:'bold'}}>
-      <div className="animate-spin" style={{marginRight:'10px'}}>⚙️</div> Loading Admin Panel...
-    </div>
-  );
+  if (loading) return <div style={{textAlign:'center', marginTop:'100px'}}>Loading Control Panel...</div>;
 
   return (
     <div style={styles.wrapper}>
       <div style={styles.container}>
-        
-        <div style={styles.titleSection}>
-          <h1 style={styles.mainTitle}>Admin Control Center</h1>
-          <p style={styles.subTitle}>Monitor users and platform inquiries in real-time.</p>
+        <div style={styles.header}>
+          <h1 style={{color: '#1e293b', fontSize: '28px', fontWeight: '800'}}>Admin Dashboard</h1>
+          <p style={{color: '#64748b'}}>Managing EduTech Infrastructure</p>
         </div>
 
-        {/* REGISTERED USERS */}
+        {/* SECTION: USER MANAGEMENT */}
         <div style={styles.card}>
-          <div style={{...styles.cardHeader, ...styles.blueHeader}}>
-            <span style={{fontSize: '18px'}}>👤 Student Records</span>
-            <span style={{fontSize: '13px', opacity: '0.9'}}>{users.length} Registered</span>
+          <div style={{...styles.cardHeader, backgroundColor: '#2563eb'}}>
+            <span>User Accounts</span>
+            <span>{users.length} Total</span>
           </div>
           <table style={styles.table}>
             <thead>
               <tr>
-                <th style={styles.th}>Operations</th>
-                <th style={styles.th}>Basic Info</th>
-                <th style={styles.th}>Academic Details</th>
+                <th style={styles.th}>User Details</th>
+                <th style={styles.th}>Academic</th>
+                <th style={styles.th}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((u, i) => (
                 <tr key={i}>
                   <td style={styles.td}>
-                    <button 
-                      onClick={() => deleteUser(u.email)} 
-                      style={styles.deleteBtn}
-                      onMouseOver={(e) => e.target.style.backgroundColor = '#fecdd3'}
-                      onMouseOut={(e) => e.target.style.backgroundColor = '#fff1f2'}
-                    >
-                      Delete
-                    </button>
+                    <div style={{fontWeight:'700'}}>{u.name}</div>
+                    <div style={{fontSize:'12px', color:'#94a3b8'}}>{u.email}</div>
                   </td>
+                  <td style={styles.td}>{u.course} (Year {u.year})</td>
                   <td style={styles.td}>
-                    <div style={styles.userText}>{u.name}</div>
-                    <div style={styles.emailText}>{u.email}</div>
-                  </td>
-                  <td style={styles.td}>
-                    <span style={styles.badge}>{u.course}</span>
-                    <span style={{marginLeft:'10px', color:'#64748b', fontSize:'12px'}}>Year {u.year}</span>
+                    <button onClick={() => deleteRecord('delete_user', { email: u.email })} style={styles.btn}>Delete</button>
                   </td>
                 </tr>
               ))}
@@ -116,34 +98,63 @@ const AdminDashboard = () => {
           </table>
         </div>
 
-        {/* CONTACT MESSAGES */}
         <div style={styles.card}>
-          <div style={{...styles.cardHeader, ...styles.roseHeader}}>
-            <span style={{fontSize: '18px'}}>📩 Support Inquiries</span>
+          <div style={{...styles.cardHeader, backgroundColor: '#10b981'}}>
+            <span>System Predictions</span>
+            <span>Recent Activity</span>
           </div>
           <table style={styles.table}>
             <thead>
               <tr>
-                <th style={styles.th}>Action</th>
-                <th style={styles.th}>Feedback Details</th>
+                <th style={styles.th}>Student Email</th>
+                <th style={styles.th}>Result</th>
+                <th style={styles.th}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {predictions.map((p, i) => (
+                <tr key={i}>
+                  <td style={styles.td}>{p.email}</td>
+                  <td style={styles.td}>
+                    <span style={styles.statusBadge(p.result === 'Pass')}>
+                      {p.result.toUpperCase()}
+                    </span>
+                  </td>
+                  <td style={styles.td}>
+                    <button onClick={() => deleteRecord('delete_prediction', { id: p._id })} style={styles.btn}>Clear</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div style={styles.card}>
+          <div style={{...styles.cardHeader, backgroundColor: '#f43f5e'}}>
+            <span>Support Messages</span>
+          </div>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.th}>Sender</th>
+                <th style={styles.th}>Message Content</th>
+                <th style={styles.th}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {contacts.map((c, i) => (
                 <tr key={i}>
                   <td style={styles.td}>
-                    <button 
-                      onClick={() => deleteMsg(c.email, c.timestamp)} 
-                      style={styles.deleteBtn}
-                    >
-                      Remove
-                    </button>
+                    <strong>{c.name}</strong><br/>
+                    <small>{c.email}</small>
                   </td>
                   <td style={styles.td}>
-                    <div style={styles.userText}>{c.name} <small style={styles.emailText}>({c.email})</small></div>
-                    <div style={styles.messageBox}>
-                      "{c.message}"
+                    <div style={{fontSize:'13px', background:'#fff5f5', padding:'10px', borderRadius:'8px', borderLeft:'3px solid #f43f5e'}}>
+                      {c.message}
                     </div>
+                  </td>
+                  <td style={styles.td}>
+                    <button onClick={() => deleteRecord('delete_contact', { email: c.email, timestamp: c.timestamp })} style={styles.btn}>Remove</button>
                   </td>
                 </tr>
               ))}

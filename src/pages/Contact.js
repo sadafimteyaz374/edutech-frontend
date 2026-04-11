@@ -101,7 +101,8 @@ const Contact = () => {
                 background: '#d1fae5', color: '#065f46', padding: '12px 16px',
                 borderRadius: 10, marginBottom: 16, fontSize: '0.9rem', fontWeight: 500
               }}>
-                ✅ Message sent to Atlas!
+                Message sent successfully.
+                We'll reach out to you soon
               </div>
             )}
             <div>

@@ -1,4 +1,3 @@
-// API utility - all backend calls go through here
 const BASE_URL = 'http://localhost:5000/api';
 
 const getHeaders = (token) => ({
@@ -34,8 +33,9 @@ export const api = {
     return res.json();
   },
 
-  getHistory: async (token) => {
+  getHistory: async (email, token) => {
     const res = await fetch(`${BASE_URL}/history`, {
+      method: 'GET',
       headers: getHeaders(token),
     });
     return res.json();

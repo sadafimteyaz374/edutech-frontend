@@ -13,17 +13,16 @@ import Predict from './pages/Predict';
 import Result from './pages/Result';
 import AdminDashboard from './pages/AdminDashboard'; 
 import './index.css';
+import StudentHistory from './pages/History';
 
 const ProtectedRoute = ({ children }) => {
   const { isLoggedIn } = useAuth();
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 };
 
-// Navbar aur Footer ko control karne ke liye ek alag component
 const LayoutWrapper = ({ children }) => {
   const location = useLocation();
   
-  // Jis page par Navbar/Footer nahi dikhana uska path yahan likhein
   const isAdminPage = location.pathname === '/admin';
 
   return (
@@ -48,6 +47,7 @@ const AppContent = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/history" element={<StudentHistory />} />
           
           <Route path="/admin" element={<AdminDashboard />} />
 

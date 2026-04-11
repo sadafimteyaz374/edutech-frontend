@@ -1,4 +1,3 @@
-// Navbar component with navigation links
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -30,6 +29,7 @@ const Navbar = () => {
         {isLoggedIn && (
           <>
             <li><Link to="/predict" className={isActive('/predict')}>Predict</Link></li>
+            <li><Link to="/history" className={isActive('/history')}>History</Link></li>
             <li>
               <span
                 onClick={handleLogout}

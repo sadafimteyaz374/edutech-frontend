@@ -25,13 +25,12 @@ const Login = () => {
     
     setLoading(true);
     try {
-      // Yeh Flask backend ke /api/login route se data verify karega
       const res = await api.login(form);
       if (res.error) {
         setError(res.error);
       } else {
         login(res.user, res.token);
-        navigate('/predict');
+        navigate('/home');
       }
     } catch {
       setError('Unable to connect to server. Please check your Atlas connection.');
@@ -40,7 +39,6 @@ const Login = () => {
     }
   };
 
-  // Logic: Jab tak valid email na ho, password lock rahega
   const isEmailEntered = form.email.trim().length > 0 && form.email.includes('@');
 
   return (
@@ -51,7 +49,6 @@ const Login = () => {
 
         {error && <div className="error-msg">{error}</div>}
 
-        {/* 1. Email Address - Always Enabled */}
         <div className="input-group">
           <span className="input-icon">✉</span>
           <input
@@ -63,7 +60,6 @@ const Login = () => {
           />
         </div>
 
-        {/* 2. Password - Locked until Email is entered */}
         <div className={`input-group ${!isEmailEntered ? 'disabled-input' : ''}`}>
           <span className="input-icon">🔒</span>
           <input
