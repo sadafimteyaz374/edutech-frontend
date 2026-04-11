@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:5000/api';
+// Add /api at the end of the URL
+const BASE_URL = 'https://edutech-backend-1-yq0u.onrender.com/api';
 
 const getHeaders = (token) => ({
   'Content-Type': 'application/json',
@@ -7,6 +8,7 @@ const getHeaders = (token) => ({
 
 export const api = {
   register: async (data) => {
+    // Now this correctly hits .../api/register
     const res = await fetch(`${BASE_URL}/register`, {
       method: 'POST',
       headers: getHeaders(),
