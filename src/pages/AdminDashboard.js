@@ -9,9 +9,9 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const [uRes, cRes, pRes] = await Promise.all([
-        fetch('http://127.0.0.1:5000/api/admin/users'),
-        fetch('http://127.0.0.1:5000/api/admin/contacts'),
-        fetch('http://127.0.0.1:5000/api/admin/predictions') 
+        fetch('https://edutech-backend-1-yq0u.onrender.com/api/admin/users'),
+        fetch('https://edutech-backend-1-yq0u.onrender.com/api/admin/contacts'),
+        fetch('https://edutech-backend-1-yq0u.onrender.com/api/admin/predictions') 
       ]);
       const uData = await uRes.json();
       const cData = await cRes.json();
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
   const deleteRecord = async (endpoint, payload) => {
     if (window.confirm("Are you sure you want to delete this record permanently?")) {
-      await fetch(`http://127.0.0.1:5000/api/admin/${endpoint}`, {
+      await fetch(`https://edutech-backend-1-yq0u.onrender.com/api/admin/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
